@@ -7,12 +7,17 @@ WORKDIR /app
 # dependencies for psycopg2
 #RUN apt-get update && apt-get install --no-install-recommends -y dnsutils=1:9.11.5.P4+dfsg-5.1+deb10u11 libpq-dev python3-dev \
 #RUN apt-get update && apt-get install --no-install-recommends -y dnsutils libpq-dev
-RUN apt-get update && apt-get install --no-install-recommends -y libpq-dev
+#RUN apt-get update && apt-get install --no-install-recommends -y libpq-dev
  #RUN sudo apt-get update
  #RUN apt-get install --no-install-recommends -y dnsutils 
  #RUN apt-get install --no-install-recommends -y libpq-dev
  #&& apt-get clean \
  #&& rm -rf /var/lib/apt/lists/*
+RUN sed -i 's|http://deb.debian.org|http://archive.debian.org|g' /etc/apt/sources.list \
+  && sed -i 's|http://security.debian.org|http://archive.debian.org|g' /etc/apt/sources.list \
+  && apt-get update && apt-get install --no-install-recommends -y dnsutils libpq-dev python3-dev \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 
 # Set environment variables
